@@ -41,8 +41,8 @@ def check_gpu_usage():
 data_url = "https://data.keithito.com/data/speech/LJSpeech-1.1.tar.bz2"
 data_path = keras.utils.get_file("LJSpeech-1.1", data_url, untar=True)
 
-wavs_path = data_path + "/LJSpeech-1.1/wavs/"
-metadata_path = data_path + "/LJSpeech-1.1/metadata.csv"
+wavs_path = data_path + "/wavs/"
+metadata_path = data_path + "/metadata.csv"
 
 
 # Read metadata file and parse it

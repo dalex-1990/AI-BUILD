@@ -146,6 +146,8 @@ def CTCLoss(y_true, y_pred):
     input_length = input_length * tf.ones(shape=(batch_len, 1), dtype="int64")
     label_length = label_length * tf.ones(shape=(batch_len, 1), dtype="int64")
 
+    # Cast to float32 for mixed precision compatibility
+    y_pred = tf.cast(y_pred, tf.float32)
     loss = keras.backend.ctc_batch_cost(y_true, y_pred, input_length, label_length)
     return loss
 
@@ -211,6 +213,9 @@ def build_model(input_dim, output_dim, rnn_layers=5, rnn_units=128):
     return model
 
 
+# Check GPU configuration before building model
+check_gpu_usage()
+
 # Get the model
 model = build_model(
     input_dim=fft_length // 2 + 1,
@@ -221,6 +226,8 @@ model.summary(line_length=110)
 
 # A utility function to decode the output of the network
 def decode_batch_predictions(pred):
+    # Cast predictions to float32 for CTC decoder compatibility with mixed precision
+    pred = tf.cast(pred, tf.float32)
     input_len = np.ones(pred.shape[0]) * pred.shape[1]
     # Use greedy search. For complex tasks, you can use beam search
     results = keras.backend.ctc_decode(pred, input_length=input_len, greedy=True)[0][0]

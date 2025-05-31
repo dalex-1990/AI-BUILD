@@ -116,7 +116,7 @@ def encode_single_sample(wav_file, label):
     # 10. Return a dict as our model is expecting two inputs
     return spectrogram, label
 
-batch_size = 128
+batch_size = 160
 # Define the training dataset
 train_dataset = tf.data.Dataset.from_tensor_slices(
     (list(df_train["file_name"]), list(df_train["normalized_transcription"]))
@@ -147,8 +147,6 @@ def CTCLoss(y_true, y_pred):
     input_length = input_length * tf.ones(shape=(batch_len, 1), dtype="int64")
     label_length = label_length * tf.ones(shape=(batch_len, 1), dtype="int64")
 
-    # Cast to float32 for mixed precision compatibility
-    y_pred = tf.cast(y_pred, tf.float32)
     loss = keras.backend.ctc_batch_cost(y_true, y_pred, input_length, label_length)
     return loss
 

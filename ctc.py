@@ -116,7 +116,7 @@ def encode_single_sample(wav_file, label):
     # 10. Return a dict as our model is expecting two inputs
     return spectrogram, label
 
-batch_size = 32
+batch_size = 128
 # Define the training dataset
 train_dataset = tf.data.Dataset.from_tensor_slices(
     (list(df_train["file_name"]), list(df_train["normalized_transcription"]))

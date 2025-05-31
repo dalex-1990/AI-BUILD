@@ -116,7 +116,7 @@ def encode_single_sample(wav_file, label):
     # 10. Return a dict as our model is expecting two inputs
     return spectrogram, label
 
-batch_size = 160
+batch_size = 32
 # Define the training dataset
 train_dataset = tf.data.Dataset.from_tensor_slices(
     (list(df_train["file_name"]), list(df_train["normalized_transcription"]))
@@ -136,7 +136,6 @@ validation_dataset = (
     .padded_batch(batch_size)
     .prefetch(buffer_size=tf.data.AUTOTUNE)
 )
-
 
 def CTCLoss(y_true, y_pred):
     # Compute the training-time loss value
@@ -212,9 +211,6 @@ def build_model(input_dim, output_dim, rnn_layers=5, rnn_units=128):
     return model
 
 
-# Check GPU configuration before building model
-check_gpu_usage()
-
 # Get the model
 model = build_model(
     input_dim=fft_length // 2 + 1,
@@ -267,7 +263,7 @@ class CallbackEval(keras.callbacks.Callback):
             print("-" * 100)
 
 # Define the number of epochs.
-epochs = 50
+epochs = 1
 # Callback function to check transcription on the val set.
 validation_callback = CallbackEval(validation_dataset)
 # Train the model

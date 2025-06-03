@@ -113,7 +113,7 @@ class DoubleDQNAgent(DQNAgent):
         if self.epsilon > self.epsilon_min:
             self.epsilon *= self.epsilon_decay
 
-def train_agent(agent_class, seed, episodes=800, batch_size=192):
+def train_agent(agent_class, seed, episodes=200, batch_size=192):
     env = gym.make('CartPole-v0')
     env.seed(seed)
     np.random.seed(seed)
@@ -154,7 +154,7 @@ def train_agent(agent_class, seed, episodes=800, batch_size=192):
         steps.append(global_step)
     return steps, rewards
 
-seeds = [0, 1, 2, 3, 4]
+seeds = [0]
 dqn_steps_all = []
 dqn_rewards_all = []
 ddqn_steps_all = []

@@ -1,8 +1,6 @@
 import sys
 import gym
 import numpy as np
-if not hasattr(np, 'bool8'):
-    np.bool8 = np.bool_
 import tensorflow as tf
 from tensorflow.keras import models, layers, optimizers
 import random
@@ -35,10 +33,12 @@ try:
         test_tensor = tf.constant([1.0, 2.0, 3.0])
         print(f"Test tensor device: {test_tensor.device}")
         
-        # Ensure the tensor is actually on GPU
-        if '/GPU:0' not in test_tensor.device:
+        # Check if tensor is actually on GPU (more flexible matching)
+        if 'GPU' not in test_tensor.device:
             print("ERROR: GPU not properly configured!")
             sys.exit(1)
+        else:
+            print("✓ GPU verification successful!")
         
 except RuntimeError as e:
     print(f"FATAL: GPU configuration error: {e}")

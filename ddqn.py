@@ -148,6 +148,8 @@ def train_agent(agent_class, seed, episodes=200, batch_size=192):
                 agent.replay(batch_size)
             if done:
                 break
+        if e % 5 == 0:
+            print(f"Episode {e}/{episodes}, Total Reward: {total_reward}, Epsilon: {agent.epsilon:.2f}, Global Step: {global_step}")
         if hasattr(agent, 'update_target_model') and e % 2 == 0:
             agent.update_target_model()
         rewards.append(total_reward)

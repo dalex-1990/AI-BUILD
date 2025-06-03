@@ -5,7 +5,6 @@ if not hasattr(np, 'bool8'):
     np.bool8 = np.bool_
 import tensorflow as tf
 from tensorflow.keras import models, layers, optimizers
-from pyvirtualdisplay import Display
 import random
 import matplotlib.pyplot as plt
 

@@ -75,7 +75,8 @@ class DQNAgent:
     def _build_model(self):
         # Build the MLP model with relu activations in 2 hidden layers
         model = models.Sequential([
-            layers.Dense(24, input_dim=self.state_size, activation='relu'),
+            layers.Input(shape=(self.state_size,)),  # Use Input layer instead of input_dim
+            layers.Dense(24, activation='relu'),
             layers.Dense(24, activation='relu'),
             layers.Dense(self.action_size, activation='linear')
         ])
@@ -84,7 +85,7 @@ class DQNAgent:
         optimizer = optimizers.Adam(learning_rate=self.learning_rate)
         model.compile(loss='mse', optimizer=optimizer)
         
-        print(f"Model built on device: {model.layers[0].weights[0].device if model.layers else 'Unknown'}")
+        print(f"Model built successfully with {len(model.layers)} layers")
         return model
 
     def remember(self, state, action, reward, next_state, done):

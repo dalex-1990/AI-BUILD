@@ -154,7 +154,7 @@ def train_agent(agent_class, seed, episodes=200, batch_size=192):
         steps.append(global_step)
     return steps, rewards
 
-seeds = [0]
+seeds = [0, 1]
 dqn_steps_all = []
 dqn_rewards_all = []
 ddqn_steps_all = []
